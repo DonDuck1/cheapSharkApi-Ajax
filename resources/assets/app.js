@@ -184,6 +184,26 @@ function emptySelectedGamesTable() {
   selectedGamesTable.append(tableHeader);
 }
 
+let msSinceFirstCheckWhetherAllSearchedGamesAreInArray = 0;
+function checkWhetherAllSearchedGamesAreInArray(gamesArray, searchedGames, stores) {
+  if (gamesArray.length === searchedGames.length || msSinceFirstCheckWhetherAllSearchedGamesAreInArray >= 2000) {
+    Promise.all(gamesArray).then((values) => {
+      values.sort(function(a, b) {
+        var titleA = a.title.toUpperCase();
+        var titleB = b.title.toUpperCase();
+        return (titleA < titleB) ? -1 : (titleA > titleB) ? 1 : 0;
+      });
+      fillSearchedGamesTable(values, stores);
+    })
+    msSinceFirstCheckWhetherAllSearchedGamesAreInArray = 0;
+  } else {
+    msSinceFirstCheckWhetherAllSearchedGamesAreInArray += 100;
+    setTimeout(function() {
+      checkWhetherAllSearchedGamesAreInArray(gamesArray, searchedGames, stores);
+    }, 100)
+  }
+};
+
 async function init() {
   let deals = [];
   let stores = [];
@@ -252,14 +272,9 @@ async function init() {
               )
             })
             gamesArray.push(promise);
-
-            if (i === freeGames.length - 1) {
-              Promise.all(gamesArray).then((values) => {
-                fillSearchedGamesTable(values, stores);
-              })
-            };
           });
         };
+        checkWhetherAllSearchedGamesAreInArray(gamesArray, freeGames, stores);
       });
 
       let previousSearchedInputValue = '';
@@ -294,7 +309,6 @@ async function init() {
           
           getApiData(`https://www.cheapshark.com/api/1.0/games?title=${searchGamesInputValue}&limit=10`)
           .then((searchedGames) => {
-
             let gamesArray = [];
             for (let i = 0; i < searchedGames.length; i++) {
               getApiData(`https://www.cheapshark.com/api/1.0/games?id=${searchedGames[i].gameID}`)
@@ -315,19 +329,13 @@ async function init() {
                         thumb: searchedGames[i].thumb,
                       }
                     )
-                  })
+                  });
                   gamesArray.push(promise);
-      
-                  if (i === searchedGames.length - 1) {
-
-                    Promise.all(gamesArray).then((values) => {
-                      fillSearchedGamesTable(values, stores);
-                    })
-                  };
                 });
               });
             };
-          })
+            checkWhetherAllSearchedGamesAreInArray(gamesArray, searchedGames, stores);
+          });
         } else {
           if (searchGamesInputValue === '') {
             searchGamesErrorLabel.innerHTML = 'Cannot search games using an empty input';
