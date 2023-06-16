@@ -1,1 +1,1 @@
-# ajax-proxy
+# ajax-proxy for the Cheapshark API

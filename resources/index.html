@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="stylesheet" href="./assets/style.css">
+        <title>Cheapshark API Experimentation</title>
+    </head>
+
+    <body>
+        <script src="./assets/app.js"></script>
+
+        <div id="randomDealOfTodayDiv">
+            <h1 id="randomDealOfTodayTitle" class="textCenterAligned paddingOnTop">Random deal of today!</h1>
+            <div>
+                <h2 id="dealTitle" class="textCenterAligned"></h2>
+                <a href="" target="_blank" id="dealGameThumbnailLink"><img id="dealGameThumbnail"></a>
+                <br>
+                <div id="randomDealBottomDiv">
+                    <p id="dealStore" class="textCenterAligned"></p>
+                    <p id="dealNormalPrice" class="textCenterAligned"></p>
+                    <p id="dealSalePrice" class="textCenterAligned"></p>
+                    <p id="dealSteamRating" class="textCenterAligned paddingOnBottom"></p>
+                </div>
+            </div>
+        </div>
+        <button id="randomDealButton">Get another deal</button>
+
+        <div id="searchForGamesDiv">
+            <label for="searchGamesInput" id="searchGamesErrorDisplay"></label>
+            <br>
+            <input type="text" id="searchGamesInput" name="searchGamesInput">
+            <button id="searchGamesButton">Search</button>
+            <button id="searchFreeGames">Search for all free games</button>
+            <table id="searchedGamesTable">
+                <tr id="searchedGamesTableHeader">
+                    <th>Title</th>
+                    <th>Cheapest price</th>
+                    <th>Steam rating</th>
+                </tr>
+            </table>
+        </div>
+
+        <div id="selectedGameDiv">
+            <h1 class="textCenterAligned paddingOnTop">Selected game:</h1>
+            <div>
+                <h2 id="selectedGameTitle" class="textCenterAligned"></h2>
+                <a href="" target="_blank" id="selectedGameThumbnailLink"><img id="selectedGameThumbnail"></a>
+                <br>
+                <div id="selectedGameBottomDiv">
+                    <p id="selectedGameCheapestPriceEver"></p>
+                    <p id="selectedGameNormalPrice"></p>
+                    <table id="selectedGameDealsTable">
+                        <tr>
+                            <th>Store</th>
+                            <th>Price</th>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
