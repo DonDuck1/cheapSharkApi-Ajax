@@ -223,7 +223,7 @@ async function init() {
       let lastNineShownDeals = [randomDeal];
 
       document.getElementById('randomDealButton').addEventListener("click", function() {
-        if (lastNineShownDeals.length > 9) {
+        if (lastNineShownDeals.length > 9 || lastNineShownDeals.length >= deals.length) {
           lastNineShownDeals.splice(0, 1);
         }
         randomDeal = selectARandomDeal(deals);
@@ -342,7 +342,8 @@ async function init() {
           } else if (searchGamesInputValue === previousSearchedInputValue && searchedFreeGames === false) {
             searchGamesErrorLabel.innerHTML = 'Input is the same as previous search input';
           } else if (timeDifference < neededTimeDifferenceBetweenSearches) {
-            searchGamesErrorLabel.innerHTML = `Please wait ${neededTimeDifferenceBetweenSearches} second between each search. Search possible again in ${Math.round((neededTimeDifferenceBetweenSearches - timeDifference) * 10) / 10} seconds`;
+            searchGamesErrorLabel.innerHTML = `Please wait ${neededTimeDifferenceBetweenSearches} second between each search. 
+            Search possible again in ${Math.round((neededTimeDifferenceBetweenSearches - timeDifference) * 10) / 10} seconds`;
           }
         }
       });
